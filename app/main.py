@@ -25,7 +25,7 @@ def main():
         print("Keine bekannten Fehlermeldungen gefunden.")
         return
 
-    # 3. Fehler für die KI vorbereiten
+    # 3.Fehler für die KI vorbereiten
     error_text = "\n".join(errors)
 
     print(f"{len(errors)} relevante Log-Zeilen gefunden.")
@@ -33,14 +33,23 @@ def main():
     # 4. Ollama Client erstellen
     ai = OllamaClient()
 
-    # 5. KI-Analyse starten
+    # 5.KI-Analyse starten
     print("\nKI analysiert den Fehler...\n")
-
     result = ai.analyze_logs(error_text)
 
-    # 6. Ergebnis ausgeben
+    # 6.Ergebnis zeigen
     print("===== KI-ANALYSE =====\n")
-    print(result)
+    print("Fehlertyp",result["error_type"],"\n")
+    print("Fehlername",result["error_name"],"\n")
+    print("Hehler Ursache",result["cause"],"\n")
+    print("Erklärung",result["explanation"],"\n")
+
+    print("\n Lösungsvorschläge: ")
+    for solution in result["solution"]:
+        print("-",solution,"\n")
+
+    print("\n konfidenz:", result["confidence"])
+
 
 
 if __name__ == "__main__":
